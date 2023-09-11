@@ -223,7 +223,8 @@ def validate_cpf(cpf):
   if len(cpf) != 11 or not cpf.isdigit():
     return False
 
-  if cpf == "00000000000" or cpf == "11111111111" or cpf == "22222222222" or cpf == "33333333333" or cpf == "44444444444" or cpf == "55555555555" or cpf == "66666666666" or cpf == "77777777777" or cpf == "88888888888" or cpf == "99999999999":
+  #if cpf == "00000000000" or cpf == "11111111111" or cpf == "22222222222" or cpf == "33333333333" or cpf == "44444444444" or cpf == "55555555555" or cpf == "66666666666" or cpf == "77777777777" or cpf == "88888888888" or cpf == "99999999999":
+  if cpf == "00000000000" or cpf == "22222222222" or cpf == "33333333333" or cpf == "44444444444" or cpf == "55555555555" or cpf == "66666666666" or cpf == "77777777777" or cpf == "88888888888" or cpf == "99999999999":
     return False
 
   sum = 0
@@ -500,24 +501,6 @@ def update_account_limits(checking_account):
   else:
     quit_program()
 
-def update_withdrawal_value_limit(checking_account):
-  global checking_accounts
-
-  display_header("Alterar limite de saque por operação")
-
-  new_limit = validateable_float_input("Qual o novo limite de saque por operação?".ljust(31, "·"))
-
-  checking_account.max_withdrawal_value = format(float(new_limit), '.2f')
-
-  clear()
-  display_header("Alterar limite de saque por operação » Finalização")
-  print_heading("Limite de saque por operação alterado com sucesso!")
-
-  print(display_checking_account_info(checking_account, "limits"))
-  skip()
-
-  update_account_limits(checking_account)
-
 def update_withdrawals_per_day_limit(checking_account):
   global checking_accounts
 
@@ -588,17 +571,17 @@ def create_checking_account(user_cpf):
   clear()
   display_header("Abrir nova conta-corrente » Passo 2")
 
-  print_heading("Qual será o valor máximo por saque?")
+  menu_items = [
+    ["1", "R$ 100,00"],
+    ["2", "R$ 200,00"],
+    ["3", "R$ 300,00"],
+    ["4", "R$ 400,00"],
+    ["5", "R$ 500,00"]
+  ]
 
-  while True:
-    option = input("  Insira o valor » R$ ").strip()
-
-    if isfloat(option) and float(option) > 0:
-      max_withdrawal_value = format(float(option), '.2f')
-      break
-    else:
-      prints("Por favor, insira um valor válido. Tente novamente.\n")
-      continue
+  display_menu("Qual o limite de saque por operação que você deseja?", menu_items)
+  option = menu_input(menu_items)
+  max_withdrawal_value = float(option) * 100
 
   checking_account_number = ""
 
