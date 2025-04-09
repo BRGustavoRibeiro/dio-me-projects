@@ -1,2 +1,2 @@
-# dio-me-projects
-Projects developed for Dio.me
+# dio.me
+Monorepo for projects developed for bootcamps and courses for dio.me
